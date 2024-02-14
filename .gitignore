@@ -1,0 +1,4 @@
+.terraform*
+apply.sh
+*.tfstate
+*.tfstate.backup

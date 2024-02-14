@@ -1,0 +1,9 @@
+---
+apiVersion: resources.teleport.dev/v2
+kind: TeleportUser
+metadata:
+  name: alice
+  namespace: teleport-iac
+spec:
+  roles:
+  - auditor

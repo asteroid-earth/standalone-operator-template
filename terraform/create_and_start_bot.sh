@@ -8,5 +8,3 @@ tbot start \
    --token="$TOKEN" \
    --auth-server=teleport.sudia.me:443 \
    --join-method=token
-
-# if you're testing this locally you can use this, but I recommend using CI/CD, here's an example action

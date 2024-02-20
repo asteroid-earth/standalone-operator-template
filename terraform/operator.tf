@@ -1,3 +1,8 @@
+variable "operator_bot_name" {
+  type = string
+  default = "operator"
+}
+
 resource "teleport_role" "k8s_operator" {
   version = "v7"
   metadata = {
@@ -52,12 +57,12 @@ resource "teleport_provision_token" "k8s_operator" {
 
   spec = {
     roles = ["Bot"]
-    bot_name = "operator"
+    bot_name = var.operator_bot_name
     join_method = "kubernetes"
     kubernetes = {
       type: "static_jwks"
       static_jwks = {
-        jwks: "{\"keys\":[{\"use\":\"sig\",\"kty\":\"RSA\",\"kid\":\"r0m_dfAndxaO-SyTgXILGIOFpvW5leFlVuwelMFDHAU\",\"alg\":\"RS256\",\"n\":\"pi2V72xEwm8Hja_kq_yqEZtAlhye2--hoMBfod_cFdER5VNfpkjR3dbTYBDoD46hiHJUSYC2ItVnfW3IuJkZyPVBXfdr5hUrqM1gE9HIf6siqTHwV9yHWHJ6Ac2K7DyCEaSzkFG-_jzpU3CNyn7AoE71_5DOFcbzUb7-y-3PdgLC_q7-JbLfa-qdc9YbNeN8QuMzsZLNKMUIx1LhA-Huplp5yoi7Sw9o4DhnvwMiqHSQfi9ulEZpl3bxxGOMtlwdLe59NG6dd3fyXk3HrTacE3bnMhhzD815Jx9n-fXugPRF_7AM71IoL1EGcCKDQp3djIH_hQD775SDCf-Ur5HtDQ\",\"e\":\"AQAB\"}]}"
+        jwks: var.jwks
       }
       allow = [
         {
@@ -69,9 +74,9 @@ resource "teleport_provision_token" "k8s_operator" {
 }
 
 resource "teleport_bot" "operator" {
-  name = "operator"
+  name = var.operator_bot_name
   token_id = teleport_provision_token.k8s_operator.metadata.name
-  roles = ["operator"]
+  roles = [teleport_role.k8s_operator.metadata.name]
 }
 
 resource "kubernetes_namespace" "teleport-iac" {

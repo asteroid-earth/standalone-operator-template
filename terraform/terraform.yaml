@@ -27,10 +27,3 @@ spec:
         - user
         verbs: ['list','create','read','update','delete']
 version: v7
----
-kind: user
-metadata:
-  name: terraform
-spec:
-  roles: ['terraform']
-version: v2
